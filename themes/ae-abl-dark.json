@@ -1,0 +1,221 @@
+{
+    "name": "OE ABL",
+    "colors": {
+        "editor.background": "#272822",
+        "editor.foreground": "#cfccbd",
+        "activityBarBadge.background": "#007acc",
+        "sideBarTitle.foreground": "#bbbbbb"
+    },
+    "tokenColors": [
+        {
+            "name": "Comment",
+            "scope": [
+                "comment.line.abl",
+                "comment.block.abl"
+            ],
+            "settings": {
+                "foreground": "#ff8040"
+            }
+        },
+        {
+            "name": "Using Statement",
+            "scope": [
+                "keyword.using.abl"
+            ],
+            "settings": {
+                "foreground": "#0080c0"
+            }
+        },
+        {
+            "name": "Error Level Statement",
+            "scope": [
+                "meta.error.level.abl"
+            ],
+            "settings": {
+                "foreground": "#0080c0"
+            }
+        },
+        {
+            "name": "Attribute",
+            "scope": [
+                "keyword.group.attribute"
+            ],
+            "settings": {
+                "fontStyle": "bold",
+                "foreground": "#00ff00"
+            }
+        },
+        {
+            "name": "Primitive Value",
+            "scope": [
+                "storage.type.abl"
+            ],
+            "settings": {
+                "foreground": "#ff0080"
+            }
+        },
+        {
+            "name": "Method",
+            "scope": [
+                "keyword.method"
+            ],
+            "settings": {
+                "foreground": "#ffff80"
+            }
+        },
+        {
+            "name": "Define Variable Statement",
+            "scope": [
+                "keyword.definition.abl"
+            ],
+            "settings": {
+                "foreground": "#1B9017"
+            }
+        },
+        {
+            "name": "Data Type",
+            "scope": [
+                "keyword.datatype.abl"
+            ],
+            "settings": {
+                "foreground": "#AC4BFF"
+            }
+        },
+        {
+            "name": "abbreviation",
+            "scope": [
+                "keyword.datatype.abbreviation.abl",
+                "keyword.definition.abbreviation.abl"
+            ],
+            "settings": {
+                "foreground": "#FF0000"
+            }
+        },
+        {
+            "name": "Define Type",
+            "scope": [
+                "keyword.define.type.abl"
+            ],
+            "settings": {
+                "foreground": "#8B0C3C"
+            }
+        },
+        {
+            "name": "Input Output",
+            "scope": [
+                "keyword.input.output.abl"
+            ],
+            "settings": {
+                "foreground": "#4BFFA4"
+            }
+        },
+        {
+            "name": "Define Option",
+            "scope": [
+                "keyword.define.option.abl"
+            ],
+            "settings": {
+                "foreground": "#1AAE7F"
+            }
+        },
+        {
+            "name": "Access Modifier",
+            "scope": [
+                "keyword.access.modifier.abl"
+            ],
+            "settings": {
+                "foreground": "#1AAE7F"
+            }
+        },
+        {
+            "name": "Variable Definition Options",
+            "scope": [
+                "keyword.variable.definition.options.abl"
+            ],
+            "settings": {
+                "foreground": "#CAFF4B"
+            }
+        },
+        {
+            "name": "String Double Quoted",
+            "scope": [
+                "string.double.abl"
+            ],
+            "settings": {
+                "foreground": "#B3018F"
+            }
+        },
+        {
+            "name": "Number",
+            "scope": [
+                "constant.numeric.source.abl"
+            ],
+            "settings": {
+                "foreground": "#B3018F"
+            }
+        },
+        {
+            "name": "Boolean",
+            "scope": [
+                "constant.boolean.source.abl"
+            ],
+            "settings": {
+                "foreground": "#B3018F"
+            }
+        },
+        {
+            "name": "Preprocessor",
+            "scope": [
+                "meta.preprocessor.abl"
+            ],
+            "settings": {
+                "foreground": "#00FF00"
+            }
+        },
+        {
+            "name": "String Single Quoted",
+            "scope": [
+                "string.single.abl"
+            ],
+            "settings": {
+                "foreground": "#B30161"
+            }
+        },
+        {
+            "name": "Access State",
+            "scope": [
+                "keyword.access.state.abl"
+            ],
+            "settings": {
+                "foreground": "#4B7AFF"
+            }
+        },
+        {
+            "name": "No-Undo Option",
+            "scope": [
+                "keyword.no.undo.abl"
+            ],
+            "settings": {
+                "foreground": "#644BC1"
+            }
+        },
+        {
+            "name": "Define Type",
+            "scope": [
+                "keyword.define-type.abl"
+            ],
+            "settings": {
+                "foreground": "#644BC1"
+            }
+        },
+        {
+            "name": "Get Statement",
+            "scope": [
+                "keyword.define.property.abl"
+            ],
+            "settings": {
+                "foreground": "#10A0B5"
+            }
+        }
+    ]
+}

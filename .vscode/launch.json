@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Current",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${file}"
+        },
+        {
+            "type": "node-terminal",
+            "name": "Run test:single",
+            "request": "launch",
+            "command": "npm run test:single ${file}",
+            "cwd": "${workspaceFolder}",
+
+        }
+    ]
+}

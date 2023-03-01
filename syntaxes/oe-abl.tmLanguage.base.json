@@ -1,0 +1,626 @@
+{
+    "fileTypes": [
+        "cls",
+        "p",
+        "w",
+        "i",
+        "t"
+    ],
+    "name": "OpenEdgeABL",
+    "patterns": [
+        {
+            "include": "#procedure-definition"
+        },
+        {
+            "include": "#method-definition"
+        },
+        {
+            "include": "#statements"
+        }
+    ],
+    "repository": {
+        "procedure-definition": {
+            "begin": "(?i)\\b(proce|proced|procedu|procedur|procedure)\\b\\s+('[\\w\\.-]*':U|'[\\w\\.-]*'|[\\w\\.-]*)?(\\s+(EXTERNAL)\\s+(\")([\\w\\.-]*)(\"))?",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.group.abl"
+                },
+                "2": {
+                    "name": "entity.name.function.abl"
+                },
+                "4": {
+                    "name": "keyword.group.abl"
+                },
+                "5": {
+                    "name": "punctuation.definition.string.begin.abl"
+                },
+                "6": {
+                    "name": "string.double.complex.abl"
+                },
+                "7": {
+                    "name": "punctuation.definition.string.begin.abl"
+                }
+            },
+            "end": "(?=\\.)",
+            "name": "meta.procedure.abl",
+            "patterns": [
+                {
+                    "begin": ":",
+                    "end": "(?i)(end\\s*procedure|end)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "keyword.group.abl"
+                        }
+                    },
+                    "name": "meta.procedure.body.abl",
+                    "patterns": [
+                        {
+                            "include": "#code-block"
+                        }
+                    ]
+                }
+            ]
+        },
+        "method-definition": {
+            "begin": "(?i)\\b(method)\\b\\s+(private|protected|public|static)\\b\\s+([\\w\\.-]+)\\b\\s+([\\w\\.-]+)\\b\\s*\\(([\\S\\s]*?)\\)\\s*?[\\.:]",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.method.abl"
+                },
+                "2": {
+                    "name": "keyword.method.accessmodifier.abl"
+                },
+                "3": {
+                    "patterns": [
+                        {
+                            "include": "#variable-name"
+                        },
+                        {
+                            "include": "#primitive-type"
+                        }
+                    ]
+                },
+                "4": {
+                    "name": "entity.name.function.abl"
+                }
+            },
+            "end": "(?=\\.)",
+            "name": "meta.method.abl",
+            "patterns": [
+                {
+                    "begin": ":",
+                    "end": "(?i)(end\\s*method|end)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "keyword.method.abl"
+                        }
+                    },
+                    "name": "meta.method.body.abl",
+                    "patterns": [
+                        {
+                            "include": "#code-block"
+                        }
+                    ]
+                }
+            ]
+        },
+        "statements": {
+            "patterns": [
+                {
+                    "include": "#string"
+                },
+                {
+                    "include": "#singlelinecomment"
+                },
+                {
+                    "include": "#multilinecomment"
+                },
+                {
+                    "include": "#declarations"
+                },
+                {
+                    "include": "#numeric"
+                },
+                {
+                    "include": "#constant"
+                },
+                {
+                    "include": "#operator"
+                },
+                {
+                    "include": "#analyze-suspend-resume"
+                },
+                {
+                    "include": "#global-scoped-define"
+                },
+                {
+                    "match": "(?i)(\\&[\\w-]*)|({\\&[\\w-]*})|(&window-system|&text-height|&line-number|&batch-mode|&file-name|&undefine|&sequence|&message|defined|&elseif|&scoped|&global|&opsys|&endif|&else|&scop|&then|&glob|&if)",
+                    "name": "storage.type.function.abl"
+                },
+                {
+                    "include": "#primitive-type"
+                },
+                {
+                    "include": "#method-call"
+                },
+                {
+                    "include": "#function-call"
+                },
+                {
+                    "include": "#code-block"
+                },
+                {
+                    "include": "#keywords"
+                },
+                {
+                    "include": "#variable-name"
+                },
+                {
+                    "include": "#array-literal"
+                },
+                {
+                    "include": "#punctuation-semicolon"
+                }
+            ]
+        },
+        "declarations": {
+            "patterns": [
+                {
+                    "include": "#define"
+                }
+            ]
+        },
+        "code-block": {
+            "patterns": [
+                {
+                    "include": "#singlelinecomment"
+                },
+                {
+                    "include": "#multilinecomment"
+                },
+                {
+                    "include": "#string"
+                },
+                {
+                    "include": "#numeric"
+                },
+                {
+                    "include": "#constant"
+                },
+                {
+                    "include": "#operator"
+                },
+                {
+                    "include": "#include-file"
+                },
+                {
+                    "include": "#define"
+                },
+                {
+                    "include": "#do-block"
+                },
+                {
+                    "include": "#keywords"
+                },
+                {
+                    "include": "#variable-name"
+                },
+                {
+                    "include": "#method-call"
+                },
+                {
+                    "include": "#function-call"
+                }
+            ]
+        },
+        "define": {
+            "begin": "(?i)\\b(def|define)\\s+",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.group.abl"
+                }
+            },
+            "end": "(?=\\.)",
+            "comment": "Let's assume define can't have '.' inside",
+            "name": "meta.define.abl",
+            "patterns": [
+                {
+                    "begin": "(?i)\\b(new|shared|var|vari|varia|variab|variabl|variable|private|protected|public|static|serializable|non-serializable)\\b",
+                    "end": "(?=\\.)",
+                    "comment": "https://documentation.progress.com/output/ua/OpenEdge_latest/index.html#page/dvref%2Fdefine-variable-statement.html%23",
+                    "name": "meta.define.variable.abl",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.group.abl"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#string"
+                        },
+                        {
+                            "include": "#primitive-type"
+                        },
+                        {
+                            "include": "#numeric"
+                        },
+                        {
+                            "include": "#constant"
+                        },
+                        {
+                            "include": "#keywords"
+                        },
+                        {
+                            "include": "#variable-name"
+                        }
+                    ]
+                },
+                {
+                    "match": "(?i)(?<=^|\\s)(input|output|input-output|return)(?=\\s)([^\\.]*)",
+                    "comment": "https://documentation.progress.com/output/ua/OpenEdge_latest/index.html#page/dvref%2Fdefine-variable-statement.html%23",
+                    "name": "meta.define.parameter.abl",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.group.abl"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#string"
+                                },
+                                {
+                                    "include": "#primitive-type"
+                                },
+                                {
+                                    "include": "#numeric"
+                                },
+                                {
+                                    "include": "#constant"
+                                },
+                                {
+                                    "include": "#keywords"
+                                },
+                                {
+                                    "include": "#parameter-name"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "match": "(?i)\\b(stream)\\b([^\\.]*)",
+                    "comment": "https://documentation.progress.com/output/ua/OpenEdge_latest/index.html#page/dvref%2Fdefine-stream-statement.html%23",
+                    "name": "meta.define.stream.abl",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.group.abl"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#variable-name"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "include": "#string"
+                },
+                {
+                    "include": "#primitive-type"
+                },
+                {
+                    "include": "#numeric"
+                },
+                {
+                    "include": "#constant"
+                },
+                {
+                    "include": "#keywords"
+                },
+                {
+                    "include": "#singlelinecomment"
+                },
+                {
+                    "include": "#multilinecomment"
+                }
+            ]
+        },
+        "do-block": {
+            "begin": "(?i)\\b(do)\\b",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.group.abl"
+                }
+            },
+            "end": "(?=\\.)",
+            "name": "meta.do.abl",
+            "patterns": [
+                {
+                    "begin": "(?i)\\b(while)\\b",
+                    "end": "(?=(?::))",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.group.abl"
+                        }
+                    },
+                    "name": "meta.do.while.abl",
+                    "patterns": [
+                        {
+                            "include": "#statements"
+                        }
+                    ]
+                },
+                {
+                    "include": "#statements"
+                },
+                {
+                    "begin": ":",
+                    "end": "(?i)(end\\s*do|end)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "keyword.group.abl"
+                        }
+                    },
+                    "name": "meta.do.body.abl",
+                    "patterns": [
+                        {
+                            "include": "#code-block"
+                        }
+                    ]
+                }
+            ]
+        },
+        "analyze-suspend-resume": {
+            "begin": "(?i)(\\&analyze-suspend|\\&analyze-resume)\\s*",
+            "end": "(?=(?://|/\\*))|$",
+            "name": "comment.preprocessor.analyze-suspend.abl"
+        },
+        "global-scoped-define": {
+            "begin": "(?i)(\\&scoped-define|\\&global-define)\\s*([\\.\\w\\\\\/-]*)\\s*",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.group.abl"
+                },
+                "2": {
+                    "name": "entity.name.function.preprocessor.abl"
+                }
+            },
+            "end": "(?=(?://|/\\*))|$",
+            "name": "meta.preprocessor.define.abl",
+            "patterns": [
+                {
+                    "include": "#string"
+                }
+            ]
+        },
+        "method-call": {
+            "match": "(?<=\\.|:)(\\w|-)+",
+            "name": "support.function.abl"
+        },
+        "function-call": {
+            "name": "meta.function-call.abl",
+            "begin": "([\\w-]+)\\s*(\\()",
+            "end": "(\\))",
+            "beginCaptures": {
+                "1": {
+                    "name": "entity.name.function.abl"
+                },
+                "2": {
+                    "name": "meta.brace.round.js"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "meta.brace.round.js"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#expression"
+                },
+                {
+                    "include": "#punctuation-comma"
+                }
+            ]
+        },
+        "variable-name": {
+            "match": "(?<=^|\\s|\\[|\\()([\\w-]+)",
+            "name": "variable.other.abl"
+        },
+        "array-literal": {
+            "name": "meta.array.literal.abl",
+            "begin": "\\[",
+            "beginCaptures": {
+                "0": {
+                    "name": "meta.brace.square.abl"
+                }
+            },
+            "end": "\\]",
+            "endCaptures": {
+                "0": {
+                    "name": "meta.brace.square.abl"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#expression"
+                },
+                {
+                    "include": "#punctuation-comma"
+                }
+            ]
+        },
+        "expression": {
+            "patterns": [
+                {
+                    "include": "#string"
+                },
+                {
+                    "include": "#constant"
+                },
+                {
+                    "include": "#numeric"
+                },
+                {
+                    "include": "#variable-name"
+                }
+            ]
+        },
+        "parameter-name": {
+            "match": "(?<=^|\\s)(\\w|-)+(?=\\s)",
+            "name": "variable.parameter.abl"
+        },
+        "include-file": {
+            "begin": "({)\\s*",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.section.abl"
+                }
+            },
+            "end": "\\s*(})",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.section.abl"
+                }
+            },
+            "name": "meta.include.abl",
+            "patterns": [
+                {
+                    "include": "#string"
+                },
+                {
+                    "match": "(?i)({\\&[\\w-]*})",
+                    "name": "keyword.group"
+                },
+                {
+                    "match": "(\\&[\\w-]+)(\\s*)=(\\s*)((\".*\")|('.*')|([^}\\s]*))",
+                    "name": "meta.include-named-argument"
+                },
+                {
+                    "match": "([^}\\s]*)\\s*",
+                    "captures": {
+                        "1": {
+                            "name": "string.unquoted.include-argument.abl"
+                        }
+                    }
+                }
+            ],
+            "comment": "https://documentation.progress.com/output/ua/OpenEdge_latest/index.html#page/dvref%2F%257B-%257D-include-file-reference.html%23"
+        },
+        "argument-reference": {
+            "comment": "https://documentation.progress.com/output/ua/OpenEdge_latest/index.html#page/dvref%2F%257B-%257D-argument-reference.html%23"
+        },
+        "singlelinecomment": {
+            "match": "//.*$",
+            "name": "comment.source.abl"
+        },
+        "multilinecomment": {
+            "begin": "(?<!=)\\/\\*",
+            "contentName": "comment",
+            "end": "\\*/",
+            "name": "comment.block.source.abl",
+            "patterns": [
+                {
+                    "include": "#multilinecomment",
+                    "name": "comment.block.source.abl"
+                }
+            ]
+        },
+        "string": {
+            "patterns": [
+                {
+                    "include": "#singlequotedstring"
+                },
+                {
+                    "include": "#doublequotedstring"
+                }
+            ]
+        },
+        "singlequotedstring": {
+            "begin": "'",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.begin.abl"
+                }
+            },
+            "end": "'",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.end.abl"
+                }
+            },
+            "name": "string.single.complex.abl",
+            "patterns": [
+                {
+                    "match": "~.",
+                    "name": "constant.character.escape.abl"
+                }
+            ]
+        },
+        "doublequotedstring": {
+            "begin": "\"",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.begin.abl"
+                }
+            },
+            "end": "\"",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.end.abl"
+                }
+            },
+            "name": "string.double.complex.abl",
+            "patterns": [
+                {
+                    "match": "~.",
+                    "name": "constant.character.escape.abl"
+                }
+            ]
+        },
+        "primitive-type": {
+            "match": "(?i)(?<=^|\\s)(blob|character|characte|charact|charac|chara|char|clob|com-handle|date|datetime|datetime-tz|decimal|decima|decim|deci|dec|handle|int64|integer|intege|integ|inte|int|logical|logica|logic|logi|log|longchar|longcha|longch|memptr|raw|recid|rowid|widget-handle)(?![=\\w-])",
+            "name": "storage.type.abl",
+            "comment": "https://documentation.progress.com/output/ua/OpenEdge_latest/index.html#page/dvref/data-types.html"
+        },
+        "numeric": {
+            "match": "(?<![\\w-])((0(x|X)[0-9a-fA-F]+)|([0-9]+(\\.[0-9]+)?))",
+            "name": "constant.numeric.source.abl"
+        },
+        "constant": {
+            "match": "(?i)(?<=^|\\s)(true|false|yes|no)(?!\\w|-)",
+            "name": "constant.language.source.abl"
+        },
+        "punctuation-comma": {
+            "name": "punctuation.separator.comma.abl",
+            "match": ","
+        },
+        "punctuation-semicolon": {
+            "name": "punctuation.terminator.abl",
+            "match": "\\."
+        },
+        "operator": {
+            "patterns": [
+                {
+                    "include": "#operator1"
+                },
+                {
+                    "include": "#operator2"
+                }
+            ]
+        },
+        "operator1": {
+            "match": "(?i)(?<=^|\\s)(or|and|not|is|eq|ge|ne|le|lt|gt)(?=\\s|\\.)",
+            "name": "keyword.operator.source.abl"
+        },
+        "operator2": {
+            "match": "(?i)(<=|<>|>=|=|\\+| - |/|<|>|,)",
+            "name": "keyword.operator.source.abl"
+        },
+        "keywords": {}
+    },
+    "scopeName": "source.abl",
+    "uuid": "075bb86e-03ea-4fea-bac0-e11b9dc73e03"
+}

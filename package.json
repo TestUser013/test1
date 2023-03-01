@@ -1,0 +1,71 @@
+{
+    "name": "vscode-oe-abl",
+    "displayName": "VSCode-OpenEdge-ABL",
+    "description": "",
+    "version": "0.0.1",
+    "author": "j-Fobos",
+    "license": "MIT",
+    "icon": "./images/progress_icon.png",
+    "scripts": {
+        "build": "gulp build",
+        "test": "mocha syntaxes/tests/**/*.spec.js",
+        "test:single": "mocha",
+        "syntax": "node ./syntaxes/index.js",
+        "watch": "gulp watch",
+        "clean": "gulp clean"
+    },
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/j-fobos/vscode-oe-abl.git"
+    },
+    "categories": [
+        "Programming Languages",
+        "Themes"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "OpenEdgeABL",
+                "aliases": [
+                    "OpenEdge ABL",
+                    "Progress 4GL",
+                    "oe-abl"
+                ],
+                "extensions": [
+                    ".cls",
+                    ".p",
+                    ".i",
+                    ".w",
+                    ".t"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "OpenEdgeABL",
+                "scopeName": "source.abl",
+                "path": "./syntaxes/oe-abl.tmLanguage.json"
+            }
+        ],
+        "themes": [
+            {
+                "label": "OpenEdge ABL",
+                "uiTheme": "vs-dark",
+                "path": "./themes/ae-abl-dark.json"
+            }
+        ]
+    },
+    "devDependencies": {
+        "chai": "4.2.0",
+        "del": "6.1.1",
+        "gulp": "4.0.2",
+        "mocha": "6.2.3",
+        "plist": "^3.0.6",
+        "vscode-oniguruma": "1.6.2",
+        "vscode-textmate": "7.0.1"
+    }
+}

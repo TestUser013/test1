@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "build",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "npm: build",
+            "detail": "gulp build"
+        },
+        {
+            "type": "npm",
+            "script": "watch",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "npm: watch",
+            "detail": "gulp watch"
+        },
+        {
+            "type": "npm",
+            "script": "clean",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "npm: clean",
+            "detail": "gulp clean"
+        },
+        {
+            "type": "npm",
+            "script": "test",
+            "group": "test",
+            "problemMatcher": [],
+            "label": "npm: test",
+            "detail": "mocha syntaxes/tests/**/*.spec.js"
+        }
+    ]
+}
