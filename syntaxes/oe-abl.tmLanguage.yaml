@@ -1,0 +1,272 @@
+name: OpenEdgeABL
+scopeName: source.abl
+fileTypes: [cls, p, w, i, t]
+uuid: 075bb86e-03ea-4fea-bac0-e11b9dc73e03
+
+patterns:
+ - include: '#comments'
+ - include: '#definitions'
+ - include: '#statements'
+ - include: '#keywords'
+ - include: '#preprocessor'
+ - include: '#include-file'
+
+repository:
+    keywords: ''
+
+    comments:
+        patterns:
+        - include: '#comment-line'
+        - include: '#comment-block'
+
+    definitions:
+        patterns:
+        - include: '#variable-definition'
+        - include: '#variable-definition-abbreviation'
+        - include: '#temp-table-definition'
+
+    statements:
+        patterns:
+        - include: '#using'
+        - include: '#error-level'
+        - include: '#define-property-statement'
+        - include: '#define-property-min-statement'
+
+    data:
+        patterns:
+        - include: '#string'
+        - include: '#number'
+        - include: '#date'
+        - include: '#boolean'
+
+    code-parts:
+        patterns:
+        - include: '#comments'
+        - include: '#statements'
+        - include: '#definitions'
+        - include: '#preprocessor'
+        - include: '#include-file'
+
+    definition-parts:
+        patterns:
+        - include: '#access-state'
+        - include: '#input-output'
+        - include: '#access-modifier'
+        - include: '#state-modifier'
+        - include: '#define-type'
+        - include: '#define-option'
+        - include: '#data-types'
+        - include: '#data-type-abbreviation'
+        - include: '#data'
+        - include: '#variable-definition-options'
+        - include: '#no-undo'
+        - include: '#comments'
+        - include: '#preprocessor'
+        - include: '#include-file'
+
+    comment-line:
+        name: comment.line.abl
+        begin: (//)\s*(?=\s|$)
+        beginCaptures:
+            1: { name: punctuation.definition.comment.line.abl }
+            2: { name: punctuation.definition.comment.abl }
+        end: (?=^)
+
+    comment-block:
+        name: comment.block.abl
+        begin: (/\*)(?!/)
+        beginCaptures:
+            1: { name: punctuation.definition.comment.block.abl }
+            2: { name: punctuation.definition.comment.abl }
+        end: \*/
+        endCaptures:
+            1: { name: punctuation.definition.comment.block.abl }
+        patterns:
+        - include: '#comment-block'
+
+    string:
+        patterns:
+         - include: '#single-quoted-string'
+         - include: '#double-quoted-string'
+
+    single-quoted-string:
+        begin: "'"
+        beginCaptures:
+            1: { name: punctuation.definition.string.begin.abl }
+        end: "'"
+        endCaptures:
+            1: { name: punctuation.definition.string.end.abl }
+        name: string.single.abl
+        patterns:
+         - match: ~.,
+           name: constant.character.escape.abl
+
+    double-quoted-string:
+        begin: "\""
+        beginCaptures:
+            1: { name: punctuation.definition.string.begin.abl }
+        end: "\""
+        endCaptures:
+            1: { name: punctuation.definition.string.end.abl }
+        name: string.double.abl
+        patterns:
+         - match: "~."
+           name: "constant.character.escape.abl"
+
+    number:
+        match: (?<![\w-])((0(x|X)[0-9a-fA-F]+)|([0-9]+(\.[0-9]+)?))
+        name: constant.numeric.source.abl
+
+    boolean:
+        match: (?i)(?<=^|\s)(true|false|yes|no)(?!\w|-)
+        name: constant.boolean.source.abl
+
+
+    using:
+        name: meta.using.abl
+        match: (?i)(using)\s+(.+)\.\s+?$
+        captures:
+            1: { name: keyword.using.abl }
+            2: { name: meta.using.value.abl }
+
+    error-level:
+        name: meta.error.level.abl
+        match: (?i)(block-level)\s+(.+)\.\s+?$
+        captures:
+            1: { name: keyword.error.level.abl }
+            2: { name: meta.error.level.value.abl } #todo: parse on error undo, throw statement
+
+    access-modifier:
+        name: keyword.access.modifier.abl
+        match: (?i)(?<=^|\s)(private|protected|public)(?=\s|\.|$)
+
+    state-modifier:
+        name: keyword.access.modifier.abl
+        match: (?i)(?<=^|\s)(static|abstract)(?=\s|\.|$)
+
+    access-state:
+        name: keyword.access.state.abl
+        match: (?i)(?<=^|\s)(new|global|shared)(?=\s|\.|$)
+
+    serialization:
+        name: keyword.serialization.abl
+        match: (?i)(?<=^|\s)(serializable|non-serializable)(?=\s|\.|$)
+
+    lock:
+        name: keyword.lock.abl
+        match: (?i)(?<=^|\s)(share-lock|exclusive-lock|no-lock)(?=\s|\.|$)
+
+    no-undo:
+        name: keyword.no.undo.abl
+        match: (?i)(?<=^|\s)(no-undo)(?=\s|\.|$)
+
+    no-wait:
+        name: keyword.no.wait.abl
+        match: (?i)(?<=^|\s)(no-wait)(?=\s|\.|$)
+
+    no-error:
+        name: keyword.no.error.abl
+        match: (?i)(?<=^|\s)(no-error)(?=\s|\.|$)
+
+    input-output:
+        name: keyword.input.output.abl
+        match: (?i)(?<=^|\s)(input|output|input-output|return)(?=\s|\.|$)
+
+    define-type:
+        name: keyword.define-type.abl
+        match: (?i)(?<=^|\s)(buffer|dataset|data-source|event|frame|parameter|property|query|stream|temp-table|variable|work-table|workfile)(?=\s|\.|$)
+
+    data-types:
+        patterns:
+        - include: '#data-type'
+        - include: '#data-type-abbreviation'
+
+    data-type:
+        name: keyword.datatype.abl
+        match: (?i)(?<=^|\s)(blob|character|clob|com-handle|date|datetime|datetime-tz|decimal|handle|int64|integer|logical|longchar|memptr|raw|recid|rowid|widget-handle)(?=\s|\.|$)
+
+    define-option:
+        name: keyword.define.option.abl
+        match: (?i)(?<=^|\s)(as|like|for)(?=\s|\.|$)
+
+    define-parameter:
+        name: keyword.define.parameter.abl
+        match: (?i)(?<=^|\s)(format|initial)(?=\s|\.|$)
+
+    data-type-abbreviation:
+        name: keyword.datatype.abbreviation.abl
+        match: (?i)(?<=^|\s)(characte|charact|charac|chara|char|decima|decim|deci|dec|intege|integ|inte|int|logica|logic|logi|log|longcha|longch)(?=\s|\.|$)
+
+    variable-definition-options:
+        name: keyword.variable.definition.options.abl
+        match: (?i)(?<=^|\s)(ascending|auto-endkey|auto-go|background|before-table|bgcolor|cache|case-sensitive|class|column-label|context-help-id|data-relation|dcolor|decimals|default|descending|drop-target|extent|fgcolor|field|flat-button|font|format|gcolor|get|header|image|image-down|image-insensitive|image-up|index|initial|is|label|like-sequential|mouse-pointer|namespace-prefix|namespace-uri|no-convert-3d-colors|no-focus|not|parent-id-relation|pfcolor|preselect|primary|rcode-information|reference-only|scrolling|serialize-hidden|serialize-name|set|tooltip|unique|use-index|validate|word-index|xml-node-name|xml-node-type)(?=\s|\.|$)
+
+    variable-definition:
+        name: meta.definition.abl
+        begin: (?i)(?<=^|\s)(define)(?=\s|\.|$)
+        beginCaptures:
+            1: { name: keyword.definition.abl }
+        patterns:
+        - include: '#definition-parts'
+        end: ((\.)\s*?$|(?=get|set))
+
+    variable-definition-abbreviation:
+        name: meta.definition.abbreviation.abl
+        begin: (?i)(?<=^|\s)(def|defi|defin)(?=\s|\.|$)
+        beginCaptures:
+            1: { name: keyword.definition.abbreviation.abl }
+        patterns:
+        - include: '#definition-parts'
+        end: ((\.)\s*?$|(?=get|set))
+
+    preprocessor:
+        patterns:
+        - include: '#global-scoped-define'
+        - include: '#local-scoped-define'
+
+    global-scoped-define:
+        begin: (?i)(\&scoped-define|\&global-define)\s*([\.\w\\\/-]*)\s*
+        beginCaptures:
+            1: { name: keyword.other.abl }
+            2: { name: entity.name.function.preprocessor.abl }
+        end: (?=(?://|/\*))|$
+        name: meta.preprocessor.abl
+        patterns:
+         - include: '#data'
+
+    local-scoped-define:
+        match: (?i)(\&[\w-]*)|({\&[\w-]*})|(&window-system|&text-height|&line-number|&batch-mode|&file-name|&undefine|&sequence|&message|defined|&elseif|&scoped|&global|&opsys|&endif|&else|&scop|&then|&glob|&if)
+        name: meta.preprocessor.abl
+
+    include-file:
+        begin: ({)\s*
+        beginCaptures:
+            1:{ name: punctuation.section.abl }
+        end: \s*(})
+        endCaptures:
+            1: { name: punctuation.section.abl }
+        name: meta.include.abl
+        patterns:
+        - include: "#data"
+        - match: (?i)({\&[\w-]*})
+          name: keyword.other
+        - match: (\&[\w-]+)(\s*)=(\s*)((".*")|('.*')|([^}\s]*))
+          name: meta.include-named-argument
+        - match: ([^}\s]*)\s*
+          captures:
+            1: { name: string.unquoted.include-argument.abl }
+
+    define-property-statement:
+        begin: (?i)(?<=^|\s)(get|set)(?=\s|:)
+        beginCaptures:
+            1: { name: keyword.define.property.abl }
+        end: (?i)(?<=^|\s)(end\s+get|end\s+set|end)(?=\s|\.|$)
+        endCaptures:
+            1: { name: keyword.define.property.abl }
+        name: meta.define.property.statement.abl
+
+    define-property-min-statement:
+        match: (?i)(?<=^|\s)(get|set)(\s|$)*?\.
+        captures:
+            1: { name: keyword.define.property.abl }
+        name: meta.define.property.statement.abl
